@@ -58,7 +58,7 @@ const Navbar = () => {
     const fetchNotifications = async () => {
       try {
         const res = await axios.get(
-          "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/notifications",
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/notifications`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -72,7 +72,7 @@ const Navbar = () => {
     fetchNotifications();
 
     // Setup Socket
-    const newSocket = io("${import.meta.env.VITE_API_URL || "http://localhost:5000"}");
+    const newSocket = io(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}`);
     newSocket.on("new_notification", (data) => {
       if (user && String(data.userId) === String(user.id)) {
         setNotifications((prev) => [data.notification, ...prev]);
@@ -99,7 +99,7 @@ const Navbar = () => {
     if (!showNotifications && unreadCount > 0) {
       try {
         await axios.put(
-          "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/notifications/read-all",
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/notifications/read-all`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

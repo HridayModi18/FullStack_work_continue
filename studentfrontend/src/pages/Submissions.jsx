@@ -55,7 +55,7 @@ const Submissions = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions/dashboard",
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions/dashboard`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -116,7 +116,7 @@ const Submissions = () => {
         formData.append("difficultyRating", difficultyRating);
       if (feedback) formData.append("feedback", feedback);
 
-      await axios.post("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

@@ -24,7 +24,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -59,7 +59,7 @@ const Profile = () => {
       formData.append("bio", profile.bio);
       if (photoFile) formData.append("photo", photoFile);
 
-      const res = await fetch("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -93,7 +93,7 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

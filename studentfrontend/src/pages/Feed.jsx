@@ -62,7 +62,7 @@ const Feed = ({ savedMode = false }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 
-    const newSocket = io("${import.meta.env.VITE_API_URL || "http://localhost:5000"}");
+    const newSocket = io(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}`);
     setSocket(newSocket);
 
     newSocket.on("post_upvoted", (data) => {
@@ -151,8 +151,8 @@ const Feed = ({ savedMode = false }) => {
   const fetchPosts = async () => {
     try {
       const endpoint = savedMode
-        ? "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/saved"
-        : "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp";
+        ? `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/saved`
+        : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp`;
       const res = await axios.get(endpoint);
       const token = localStorage.getItem("token");
       const userId = parseJwt(token)?.id;
