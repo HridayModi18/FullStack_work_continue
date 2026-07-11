@@ -41,12 +41,20 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 
+const fs = require("fs");
+const uploadsDir = path.join(__dirname, "uploads");
+const studentUploadsDir = path.join(__dirname, "studentuploads");
+
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+if (!fs.existsSync(studentUploadsDir)) {
+  fs.mkdirSync(studentUploadsDir, { recursive: true });
+}
+
 // If someone goes to http://localhost:5000/uploads/photos/photo.jpg, express apna uploads folder dekhega
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(
-  "/studentuploads",
-  express.static(path.join(__dirname, "studentuploads")),
-);
+app.use("/uploads", express.static(uploadsDir));
+app.use("/studentuploads", express.static(studentUploadsDir));
 
 app.use("/auth", authRoutes);
 app.use("/api/bootcamp", bootcampRoutes);
