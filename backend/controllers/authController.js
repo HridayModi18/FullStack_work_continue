@@ -3,13 +3,14 @@ const jwt = require("jsonwebtoken");
 // ─── Admin Callback ───
 // Only admins land here. Non-admins get bounced with an error.
 exports.adminCallback = (req, res) => {
+  const adminUrl = process.env.FRONTEND_ADMIN_URL || "http://localhost:5173";
   if (!req.user) {
-    return res.redirect("http://localhost:5173/login?error=unauthorized");
+    return res.redirect(`${adminUrl}/login?error=unauthorized`);
   }
 
   // Enforce: only admin role can use the admin panel
   if (req.user.role !== "admin") {
-    return res.redirect("http://localhost:5173/login?error=unauthorized");
+    return res.redirect(`${adminUrl}/login?error=unauthorized`);
   }
 
   const token = jwt.sign(
@@ -18,7 +19,7 @@ exports.adminCallback = (req, res) => {
     { expiresIn: "30d" },
   );
 
-  res.redirect(`http://localhost:5173/login?token=${token}`);
+  res.redirect(`${adminUrl}/login?token=${token}`);
 };
 
 // ─── Student Callback ───
@@ -26,8 +27,9 @@ exports.adminCallback = (req, res) => {
 // Their User record is created by passport.js strategy (in config/passport.js),
 // so they automatically appear in the admin's student list.
 exports.studentCallback = (req, res) => {
+  const studentUrl = process.env.FRONTEND_STUDENT_URL || "http://localhost:5174";
   if (!req.user) {
-    return res.redirect("http://localhost:5174/login?error=unauthorized");
+    return res.redirect(`${studentUrl}/login?error=unauthorized`);
   }
 
   const token = jwt.sign(
@@ -36,7 +38,7 @@ exports.studentCallback = (req, res) => {
     { expiresIn: "30d" },
   );
 
-  res.redirect(`http://localhost:5174/login?token=${token}`);
+  res.redirect(`${studentUrl}/login?token=${token}`);
 };
 
 // ─── Token verification ───

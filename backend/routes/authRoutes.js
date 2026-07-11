@@ -5,8 +5,12 @@ const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-const ADMIN_CALLBACK = "http://localhost:5000/auth/google/callback/admin";
-const STUDENT_CALLBACK = "http://localhost:5000/auth/google/callback/student";
+const BACKEND_URL = process.env.GOOGLE_CALLBACK_URL 
+  ? process.env.GOOGLE_CALLBACK_URL.replace("/auth/google/callback", "") 
+  : "http://localhost:5000";
+
+const ADMIN_CALLBACK = `${BACKEND_URL}/auth/google/callback/admin`;
+const STUDENT_CALLBACK = `${BACKEND_URL}/auth/google/callback/student`;
 
 // ─── Admin Google Login ───
 router.get("/google/admin", (req, res, next) => {
@@ -31,7 +35,7 @@ router.get(
   "/google/callback/admin",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5173/login?error=unauthorized",
+    failureRedirect: `${process.env.FRONTEND_ADMIN_URL || "http://localhost:5173"}/login?error=unauthorized`,
     callbackURL: ADMIN_CALLBACK,
   }),
   authController.adminCallback,
@@ -42,7 +46,7 @@ router.get(
   "/google/callback/student",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5174/login?error=unauthorized",
+    failureRedirect: `${process.env.FRONTEND_STUDENT_URL || "http://localhost:5174"}/login?error=unauthorized`,
     callbackURL: STUDENT_CALLBACK,
   }),
   authController.studentCallback,
