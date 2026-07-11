@@ -1,0 +1,178 @@
+.doubt-widget-container {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.labubu-mascot {
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  z-index: -1;
+  transform: translateY(20px);
+  opacity: 0;
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+}
+
+.doubt-widget-container:hover .labubu-mascot {
+  transform: translateY(-115px) rotate(8deg);
+  opacity: 1;
+}
+
+.doubt-prompt-box {
+  background: color-mix(in srgb, var(--surface-color) 85%, transparent);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid color-mix(in srgb, var(--surface-border) 80%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--accent-primary) 30%, var(--surface-border));
+  border-left: none;
+  border-radius: 0 24px 24px 0;
+  padding: 1.75rem 2.25rem 1.75rem 1.75rem;
+  box-shadow: 
+    0 15px 35px -10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 300px;
+  pointer-events: auto;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.doubt-prompt-box::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at top right, color-mix(in srgb, var(--accent-primary) 15%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.doubt-prompt-box:hover {
+  border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.4),
+    0 0 25px -5px color-mix(in srgb, var(--accent-primary) 30%, transparent),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+[data-theme="light"] .doubt-prompt-box {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 
+    0 15px 35px -10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.doubt-prompt-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.doubt-ask-btn {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  align-self: flex-start;
+  box-shadow: 
+    0 8px 16px -4px color-mix(in srgb, var(--accent-primary) 50%, transparent),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.doubt-ask-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 24px -6px color-mix(in srgb, var(--accent-primary) 70%, transparent),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  filter: brightness(1.15);
+}
+
+.doubt-ask-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px -2px color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
+
+.peel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 10% 20%, #1e1b4b 0%, #0f172a 40%, #020617 100%);
+  z-index: 9999;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] .peel-overlay {
+  background: radial-gradient(circle at 90% 10%, #f3e8ff 0%, #f8fafc 40%, #ffffff 100%);
+}
+
+.peel-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+  filter: blur(80px);
+  z-index: -1;
+  pointer-events: none;
+  animation: mesh-flow 10s ease-in-out infinite alternate;
+}
+
+@keyframes mesh-flow {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.05) translate(2%, -2%); }
+  100% { transform: scale(1.1) translate(-2%, 2%); }
+}
+
+.peel-content {
+  color: #f8fafc;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 10;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+[data-theme="light"] .peel-content {
+  color: #0f172a;
+  text-shadow: none;
+}
+
+.peel-content h2 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}

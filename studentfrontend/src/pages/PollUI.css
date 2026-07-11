@@ -1,0 +1,65 @@
+.poll-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.poll-option {
+  position: relative;
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.poll-option:hover:not(.voted-view) {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--accent-primary);
+}
+
+.poll-option-content {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  z-index: 2;
+  color: var(--text-primary);
+}
+
+.poll-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(59, 130, 246, 0.2);
+  z-index: 1;
+  transition: width 0.5s ease;
+}
+
+[data-theme="light"] .poll-progress {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.poll-option.voted-view {
+  cursor: default;
+}
+
+.poll-option.my-vote .poll-progress {
+  background: var(--accent-gradient);
+  opacity: 0.8;
+}
+
+.poll-option.my-vote .poll-option-content {
+  color: white;
+}
+
+.poll-total-votes {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-top: 0.25rem;
+}
