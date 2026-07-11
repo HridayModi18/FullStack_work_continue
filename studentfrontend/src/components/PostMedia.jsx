@@ -19,7 +19,7 @@ const PostMedia = ({ type, url }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fullUrl = `http://localhost:5000${url}`;
+  const fullUrl = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${url}`;
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);

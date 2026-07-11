@@ -79,7 +79,7 @@ const SubmissionPromptWidget = ({
                   sub.studentId === currentUserId && sub.status === "submitted",
               );
               const rawUrl = assignment.mediaUrl && assignment.mediaUrl.length > 0 ? assignment.mediaUrl[0] : null;
-              const pdfUrl = rawUrl ? (rawUrl.startsWith("http") ? rawUrl : `http://localhost:5000${rawUrl}`) : null;
+              const pdfUrl = rawUrl ? (rawUrl.startsWith("http") ? rawUrl : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${rawUrl}`) : null;
 
               return (
                 <div key={assignment.id} className="assignment-mini-wrapper">

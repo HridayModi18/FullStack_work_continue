@@ -50,7 +50,7 @@ const Doubts = () => {
 
   const fetchDoubts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/doubts", {
+      const res = await axios.get("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/doubts", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setDoubts(res.data);
@@ -64,7 +64,7 @@ const Doubts = () => {
   useEffect(() => {
     fetchDoubts();
 
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("${import.meta.env.VITE_API_URL || "http://localhost:5000"}");
     setSocket(newSocket);
 
     newSocket.on("new_doubt", () => fetchDoubts());
@@ -77,7 +77,7 @@ const Doubts = () => {
     e.preventDefault();
     if (!newQuestion.trim()) return;
     try {
-      await axios.post("http://localhost:5000/api/doubts", {
+      await axios.post("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/doubts", {
         question: newQuestion,
         isPublic,
       }, {
@@ -95,7 +95,7 @@ const Doubts = () => {
     const answer = answerInputs[doubtId];
     if (!answer?.trim()) return;
     try {
-      await axios.put(`http://localhost:5000/api/doubts/${doubtId}/answer`, {
+      await axios.put(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/doubts/${doubtId}/answer`, {
         answer,
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

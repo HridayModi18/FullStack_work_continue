@@ -21,7 +21,7 @@ const Onboarding = ({ onComplete }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -52,7 +52,7 @@ const Onboarding = ({ onComplete }) => {
       submitData.append("rollNumber", formData.rollNumber);
       submitData.append("year", formData.year);
 
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch("${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/profile", {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: submitData,

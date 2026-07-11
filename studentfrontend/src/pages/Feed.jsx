@@ -62,7 +62,7 @@ const Feed = ({ savedMode = false }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("${import.meta.env.VITE_API_URL || "http://localhost:5000"}");
     setSocket(newSocket);
 
     newSocket.on("post_upvoted", (data) => {
@@ -151,8 +151,8 @@ const Feed = ({ savedMode = false }) => {
   const fetchPosts = async () => {
     try {
       const endpoint = savedMode
-        ? "http://localhost:5000/api/bootcamp/saved"
-        : "http://localhost:5000/api/bootcamp";
+        ? "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/saved"
+        : "${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp";
       const res = await axios.get(endpoint);
       const token = localStorage.getItem("token");
       const userId = parseJwt(token)?.id;
@@ -199,7 +199,7 @@ const Feed = ({ savedMode = false }) => {
         ),
       );
       await axios.post(
-        `http://localhost:5000/api/interactions/${postId}/upvote`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/${postId}/upvote`,
       );
     } catch (error) {
       console.error("Upvote error:", error);
@@ -215,7 +215,7 @@ const Feed = ({ savedMode = false }) => {
       if (savedMode) {
         setPosts((prev) => prev.filter((p) => p.id !== postId || p.isSaved));
       }
-      await axios.post(`http://localhost:5000/api/interactions/${postId}/save`);
+      await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/${postId}/save`);
     } catch (error) {
       console.error("Save error:", error);
       fetchPosts();
@@ -226,7 +226,7 @@ const Feed = ({ savedMode = false }) => {
     if (!commentText.trim()) return;
     try {
       await axios.post(
-        `http://localhost:5000/api/interactions/${postId}/comment`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/${postId}/comment`,
         {
           content: commentText,
           parentId,
@@ -241,7 +241,7 @@ const Feed = ({ savedMode = false }) => {
   const handleCommentUpvote = async (commentId) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/interactions/comment/${commentId}/upvote`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/comment/${commentId}/upvote`,
       );
     } catch (error) {
       console.error("Comment upvote failed:", error);
@@ -251,7 +251,7 @@ const Feed = ({ savedMode = false }) => {
   const handleUserClick = async (userId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:5000/api/users/${userId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSelectedUser(res.data);
@@ -264,7 +264,7 @@ const Feed = ({ savedMode = false }) => {
     if (!editCommentText.trim()) return;
     try {
       await axios.put(
-        `http://localhost:5000/api/interactions/comment/${commentId}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/comment/${commentId}`,
         {
           content: editCommentText,
         },
@@ -279,7 +279,7 @@ const Feed = ({ savedMode = false }) => {
 
   const handleDeletePost = async (postId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/bootcamp/${postId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/${postId}`);
       setPosts(posts.filter((p) => p.id !== postId));
       setPostMenuOpenId(null);
     } catch (error) {
@@ -290,7 +290,7 @@ const Feed = ({ savedMode = false }) => {
   const handleDeleteComment = async (commentId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/interactions/comment/${commentId}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/comment/${commentId}`,
       );
     } catch (error) {
       console.error("Delete failed:", error);
@@ -475,7 +475,7 @@ const Feed = ({ savedMode = false }) => {
         ),
       );
       await axios.post(
-        `http://localhost:5000/api/interactions/${postId}/vote`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/interactions/${postId}/vote`,
         { optionIndex },
       );
     } catch (error) {

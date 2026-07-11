@@ -20,7 +20,7 @@ const UserDetailsModal = ({ user, onClose }) => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res = await axios.get(`http://localhost:5000/api/users/${user.id}/stats`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/${user.id}/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(res.data);
