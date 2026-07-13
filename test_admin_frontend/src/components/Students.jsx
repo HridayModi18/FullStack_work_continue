@@ -298,7 +298,7 @@ const Students = () => {
     return `https://ui-avatars.com/api/?name=${name}&background=random`;
   };
 
-  const combinedStudents = [...realStudents.map(rs => ({
+  const combinedStudents = realStudents.map(rs => ({
     id: rs.id,
     name: rs.name,
     email: rs.email,
@@ -308,7 +308,7 @@ const Students = () => {
     assignments: 0,
     lastActive: rs.lastLogin ? new Date(rs.lastLogin).toLocaleDateString() : "Never",
     doubts: []
-  })), ...MOCK_STUDENTS];
+  }));
 
   return (
     <div className="users-container">

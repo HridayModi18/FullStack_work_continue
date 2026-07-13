@@ -1,31 +1,11 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import axios from 'axios';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Legend, LabelList } from 'recharts';
 import { Users, Shield, HelpCircle, FileText } from 'lucide-react';
 import './AnalyticsDashboard.css';
 
-// --- DEMO DATA ---
-const studentGrowthData = [
-  { month: 'Jan', students: 120 },
-  { month: 'Feb', students: 250 },
-  { month: 'Mar', students: 400 },
-  { month: 'Apr', students: 580 },
-  { month: 'May', students: 850 },
-  { month: 'Jun', students: 1240 },
-];
-
-const doubtData = [
-  { name: 'Doubts', answered: 450, unanswered: 32 }
-];
-
-const assignmentData = [
-  { name: 'Assignment 1', value: 400 },
-  { name: 'Assignment 2', value: 300 },
-  { name: 'Assignment 3', value: 200 },
-  { name: 'Final Project', value: 340 }
-];
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ec4899'];
-// -----------------
 
 const StatCard = ({ title, value, icon, accentColor, linkText }) => (
   <div className="stat-card" style={{ '--accent': accentColor }}>
@@ -47,6 +27,30 @@ const StatCard = ({ title, value, icon, accentColor, linkText }) => (
 
 const AnalyticsDashboard = () => {
   const { adminData } = useOutletContext();
+  const [loading, setLoading] = useState(true);
+  const [dashboardStats, setDashboardStats] = useState({
+    stats: { totalStudents: 0, totalAdmins: 0, unansweredDoubts: 0, totalPosts: 0 },
+    studentGrowthData: [{ month: 'Active', students: 0 }],
+    doubtData: [{ name: 'Doubts', answered: 0, unanswered: 0 }],
+    assignmentData: [{ name: 'No Assignments', value: 0 }]
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/dashboard/stats`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setDashboardStats(res.data);
+      } catch (err) {
+        console.error("Failed to load live dashboard stats, keeping default empty views.", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
 
   // Custom label for Pie Chart
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -57,10 +61,20 @@ const AnalyticsDashboard = () => {
 
     return (
       <text x={x} y={y} fill={COLORS[index % COLORS.length]} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize="12" fontWeight="500">
-        {assignmentData[index].value}
+        {dashboardStats.assignmentData[index]?.value || 0}
       </text>
     );
   };
+
+  if (loading) {
+    return (
+      <div style={{ padding: "3rem", textAlign: "center", color: "#9ca3af" }}>
+        Loading live stats...
+      </div>
+    );
+  }
+
+  const { stats, studentGrowthData, doubtData, assignmentData } = dashboardStats;
 
   return (
     <div className="analytics-container">
@@ -69,16 +83,16 @@ const AnalyticsDashboard = () => {
         <p>Here is what's happening in your bootcamp today.</p>
       </div>
 
-      {/* Top Stats Row - Forced 2x2 Grid via CSS */}
+      {/* Top Stats Row - Dynamic data */}
       <div className="stats-grid">
-        <StatCard title="Total Students" value="1,240" icon={<Users size={24} />} accentColor="#3b82f6" linkText="See List" />
-        <StatCard title="Total Admins" value="4" icon={<Shield size={24} />} accentColor="#8b5cf6" linkText="See List" />
-        <StatCard title="Unanswered Doubts" value="32" icon={<HelpCircle size={24} />} accentColor="#ec4899" />
-        <StatCard title="Total Posts" value="84" icon={<FileText size={24} />} accentColor="#10b981" />
+        <StatCard title="Total Students" value={stats.totalStudents} icon={<Users size={24} />} accentColor="#3b82f6" linkText="See List" />
+        <StatCard title="Total Admins" value={stats.totalAdmins} icon={<Shield size={24} />} accentColor="#8b5cf6" linkText="See List" />
+        <StatCard title="Unanswered Doubts" value={stats.unansweredDoubts} icon={<HelpCircle size={24} />} accentColor="#ec4899" />
+        <StatCard title="Total Posts" value={stats.totalPosts} icon={<FileText size={24} />} accentColor="#10b981" />
       </div>
 
       <div className="charts-grid">
-        {/* Main Growth Chart (Hover Only as requested) */}
+        {/* Main Growth Chart */}
         <div className="chart-card span-2">
           <h2>Student Growth Timeline</h2>
           <div className="chart-wrapper">
@@ -103,7 +117,7 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Doubts Bar Chart (Predisplayed Numbers) */}
+        {/* Doubts Bar Chart */}
         <div className="chart-card">
           <h2>Doubt Resolution Status</h2>
           <div className="chart-wrapper">
@@ -127,7 +141,7 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Assignments Pie Chart (Predisplayed Numbers) */}
+        {/* Assignments Pie Chart */}
         <div className="chart-card">
           <h2>Assignment Progress</h2>
           <p className="chart-subtitle">Students on current assignments</p>

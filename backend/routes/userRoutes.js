@@ -24,6 +24,9 @@ router.delete("/profile", auth, userController.deleteAccount);
 // GET /api/users/dashboard/main
 router.get("/dashboard/main", auth, userController.getStudentDashboard);
 
+// GET /api/users/dashboard/stats
+router.get("/dashboard/stats", auth, userController.getAdminDashboardStats);
+
 // GET /api/users/:id
 router.get("/:id", auth, userController.getUserProfile);
 

@@ -361,3 +361,82 @@ exports.getStudentDashboard = async (req, res) => {
     res.status(500).json({ message: "Error:", error: error.message });
   }
 };
+
+exports.getAdminDashboardStats = async (req, res) => {
+  try {
+    const { AssignmentSubmission } = require("../models");
+    
+    // 1. Basic Stats
+    const totalStudents = await User.count({ where: { role: "user" } });
+    const totalAdmins = await User.count({ where: { role: "admin" } });
+    const unansweredDoubts = await Doubt.count({ where: { status: "pending" } });
+    const totalPosts = await BootcampPost.count();
+
+    // 2. Doubt stats (resolved vs pending)
+    const resolvedDoubts = await Doubt.count({ where: { status: "resolved" } });
+    const doubtData = [
+      { name: "Doubts", answered: resolvedDoubts, unanswered: unansweredDoubts }
+    ];
+
+    // 3. User Growth (last 6 months based on user creation date)
+    const activeUsers = await User.findAll({
+      where: { role: "user" },
+      attributes: ["createdAt"]
+    });
+    
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthCounts = {};
+    activeUsers.forEach(u => {
+      const month = monthNames[new Date(u.createdAt).getMonth()];
+      monthCounts[month] = (monthCounts[month] || 0) + 1;
+    });
+
+    // Accumulate timeline counts
+    let runningTotal = 0;
+    const studentGrowthData = monthNames.map(m => {
+      runningTotal += (monthCounts[m] || 0);
+      return { month: m, students: runningTotal };
+    }).filter(data => data.students > 0); // Only return months that have students to look clean
+
+    // Fallback if empty database
+    if (studentGrowthData.length === 0) {
+      studentGrowthData.push({ month: "Active", students: totalStudents });
+    }
+
+    // 4. Real-time Assignment Submission stats
+    const assignments = await BootcampPost.findAll({
+      where: { type: "assignment" },
+      attributes: ["id", "title"]
+    });
+
+    const assignmentData = [];
+    for (const assignment of assignments) {
+      const submissionsCount = await AssignmentSubmission.count({
+        where: { postId: assignment.id }
+      });
+      assignmentData.push({
+        name: assignment.title.length > 15 ? `${assignment.title.substring(0, 15)}...` : assignment.title,
+        value: submissionsCount
+      });
+    }
+
+    // If no assignments, fallback to mock labels with 0 values
+    if (assignmentData.length === 0) {
+      assignmentData.push({ name: "No Assignments", value: 0 });
+    }
+
+    res.json({
+      stats: {
+        totalStudents,
+        totalAdmins,
+        unansweredDoubts,
+        totalPosts
+      },
+      studentGrowthData,
+      doubtData,
+      assignmentData
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching dashboard stats", error: error.message });
+  }
+};
