@@ -34,7 +34,7 @@ const ImageCarousel = ({ urls }) => {
   return (
     <div className="carousel-container">
       <img
-        src={`http://localhost:5000${urls[currentIndex]}`}
+        src={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}${urls[currentIndex]}`}
         alt={`Image ${currentIndex + 1}`}
       />
 
@@ -74,7 +74,7 @@ const ManagePosts = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/bootcamp");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp`);
       setPosts(res.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -103,7 +103,7 @@ const ManagePosts = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/bootcamp/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -193,7 +193,7 @@ const ManagePosts = () => {
           </div>
         ) : (
           <a
-            href={mediaUrls[0] ? `http://localhost:5000${mediaUrls[0]}` : "#"}
+            href={mediaUrls[0] ? `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${mediaUrls[0]}` : "#"}
             target="_blank"
             rel="noreferrer"
             className="media-preview-box"

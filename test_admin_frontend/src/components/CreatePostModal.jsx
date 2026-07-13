@@ -424,7 +424,7 @@ const CreatePostModal = ({ type, onClose }) => {
       //text or poll jaayega json payload pe
       if (postData.type === "message" || postData.type === "poll") {
         await axios.post(
-          "http://localhost:5000/api/bootcamp/message",
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/message`,
           postData,
           { headers: authHeaders },
         );
@@ -464,7 +464,7 @@ const CreatePostModal = ({ type, onClose }) => {
               : "/assignment";
 
         await axios.post(
-          `http://localhost:5000/api/bootcamp${route}`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp${route}`,
           formData,
           {
             headers: {

@@ -26,7 +26,7 @@ const Login = () => {
   }, [searchParams, navigate, setSearchParams]);
 
   const handleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/google/admin";
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/auth/google/admin`;
   };
 
   return (

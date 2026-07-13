@@ -18,7 +18,7 @@ const Doubts = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/doubts", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/doubts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDoubts(res.data);
@@ -41,7 +41,7 @@ const Doubts = () => {
       setSubmitting(id);
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/doubts/${id}/answer`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/doubts/${id}/answer`,
         { answer: text },
         {
           headers: { Authorization: `Bearer ${token}` },

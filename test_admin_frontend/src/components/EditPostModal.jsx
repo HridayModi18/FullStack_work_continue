@@ -396,7 +396,7 @@ const EditPostModal = ({ postToEdit, onClose, onUpdate }) => {
 
       if (postData.type === "message" || postData.type === "poll") {
         const res = await axios.put(
-          `http://localhost:5000/api/bootcamp/${postToEdit.id}`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/${postToEdit.id}`,
           postData,
           { headers: authHeaders },
         );
@@ -424,7 +424,7 @@ const EditPostModal = ({ postToEdit, onClose, onUpdate }) => {
         }
 
         const res = await axios.put(
-          `http://localhost:5000/api/bootcamp/${postToEdit.id}`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/bootcamp/${postToEdit.id}`,
           formData,
           {
             headers: {

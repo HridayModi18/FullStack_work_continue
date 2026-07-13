@@ -248,7 +248,7 @@ const Students = () => {
 
   useEffect(() => {
     // Setup socket connection
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}`);
     setSocket(newSocket);
 
     newSocket.on("student_updated", () => {
@@ -269,7 +269,7 @@ const Students = () => {
   const fetchStudents = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/users/students", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/students`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRealStudents(res.data);
@@ -282,7 +282,7 @@ const Students = () => {
     try {
       setLoadingAdmins(true);
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/users/admins", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/users/admins`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAdmins(res.data);

@@ -42,7 +42,7 @@ const Submissions = () => {
     setIsLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/submissions", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSubmissions(res.data);
@@ -64,7 +64,7 @@ const Submissions = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/submissions/${selectedSubmission.id}/grade`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/submissions/${selectedSubmission.id}/grade`,
         { score, adminComments },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -196,7 +196,7 @@ const Submissions = () => {
 
                 <div className="action-buttons">
                   <a
-                    href={`http://localhost:5000${submission.fileUrl}`}
+                    href={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}${submission.fileUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-view"
