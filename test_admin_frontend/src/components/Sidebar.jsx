@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, PlusCircle, Layers, History, Users, HelpCircle, User, LogOut, FileText } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = ({ adminData }) => {
+const Sidebar = ({ adminData, isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,7 +23,7 @@ const Sidebar = ({ adminData }) => {
   ];
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <h2 className="sidebar-logo">M E N T O X</h2>
         <p className="sidebar-subtitle">Admin Panel</p>
@@ -36,7 +36,8 @@ const Sidebar = ({ adminData }) => {
             to={item.path}
             className={({ isActive }) => `sidebar-link ${isActive && item.path === window.location.pathname ? 'active' : ''}`}
             // React router's exact matching is a bit weird with index routes, so we manually check pathname for the index route to avoid it always being active
-            end={item.path === '/'} 
+            end={item.path === '/'}
+            onClick={onClose}
           >
             {item.icon}
             <span>{item.name}</span>

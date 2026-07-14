@@ -434,6 +434,10 @@
     flex-direction: column;
     gap: 2rem;
   }
+  .hero-right {
+    min-width: unset;
+    width: 100%;
+  }
   .student-meta {
     justify-content: center;
     flex-wrap: wrap;

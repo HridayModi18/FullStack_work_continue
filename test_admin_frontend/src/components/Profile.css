@@ -259,3 +259,61 @@
   text-align: center;
   margin-top: 5rem;
 }
+
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 900px) {
+  .profile-wrapper {
+    min-height: auto;
+    padding: 1.5rem 1rem;
+    justify-content: flex-start;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .profile-avatar-section {
+    width: 100%;
+  }
+
+  .profile-name-display {
+    font-size: 1.8rem;
+  }
+
+  .profile-bio-display {
+    font-size: 0.95rem;
+    padding: 0 1rem;
+  }
+
+  /* Reposition/Hide absolute floating stats to fit on screen */
+  .floating-stat {
+    position: static;
+    transform: none !important;
+    margin: 0.5rem auto;
+    width: max-content;
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .floating-stat.top-left,
+  .floating-stat.top-right,
+  .floating-stat.top-center {
+    position: static;
+  }
+
+  /* Make the form fill the row below the avatar */
+  .profile-form-section {
+    position: static;
+    width: 100%;
+    margin-left: 0;
+    padding: 1.5rem;
+    background: rgba(24, 24, 27, 0.95);
+  }
+
+  .main-edit-btn {
+    position: static;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}

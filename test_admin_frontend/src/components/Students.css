@@ -516,3 +516,55 @@
 .doubt-status.pending {
   color: #f59e0b;
 }
+
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 600px) {
+  .users-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .users-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .users-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tab {
+    flex: 1 1 calc(50% - 0.5rem);
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .users-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Modal responsive layouts */
+  .modal-container {
+    width: 95%;
+    margin: 10px;
+    max-height: 90vh;
+  }
+
+  .modal-body-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .modal-section-title {
+    font-size: 1rem;
+  }
+
+  .doubt-item {
+    padding: 0.8rem;
+  }
+}

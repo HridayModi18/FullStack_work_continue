@@ -195,3 +195,21 @@
 .error-box.show {
   top: 32px;
 }
+
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 400px) {
+  .mentox-3d-text {
+    font-size: 1.6rem;
+    letter-spacing: 0.4em;
+    margin-right: -0.4em;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+}

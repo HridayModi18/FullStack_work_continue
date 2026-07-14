@@ -17,3 +17,83 @@
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 30px 30px;
 }
+
+/* Mobile top bar — hidden on desktop */
+.mobile-topbar {
+  display: none;
+}
+
+/* Overlay backdrop for mobile sidebar */
+.sidebar-overlay {
+  display: none;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  /* Show the top bar */
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(10, 10, 15, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .hamburger-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.45rem 0.55rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hamburger-btn span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #e4e4e7;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-logo {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.35em;
+    background: linear-gradient(180deg, #ffffff 0%, #71717a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Dim backdrop when sidebar open */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 300;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Content fills full width on mobile */
+  .admin-content {
+    flex: 1;
+    height: auto;
+    overflow-y: visible;
+  }
+}

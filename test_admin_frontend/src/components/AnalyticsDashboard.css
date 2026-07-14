@@ -212,3 +212,41 @@
 .recharts-tooltip-item {
   color: #fff !important;
 }
+
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 768px) {
+  .analytics-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .analytics-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .analytics-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .analytics-header p {
+    font-size: 0.85rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .chart-card.span-2 {
+    grid-column: span 1;
+  }
+
+  .chart-wrapper {
+    min-height: 200px;
+  }
+}

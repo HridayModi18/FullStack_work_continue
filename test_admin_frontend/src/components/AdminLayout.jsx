@@ -6,6 +6,7 @@ import "./AdminLayout.css";
 const AdminLayout = () => {
   const navigate = useNavigate();
   const [adminData, setAdminData] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // We move the auth verification logic here so it protects the entire layout
   useEffect(() => {
@@ -51,8 +52,34 @@ const AdminLayout = () => {
 
   return (
     <div className="admin-layout">
+      {/* Mobile overlay backdrop */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Mobile top bar with hamburger */}
+      <div className="mobile-topbar">
+        <button
+          className="hamburger-btn"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle navigation"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <span className="mobile-logo">M E N T O X</span>
+      </div>
+
       {/* Sleek Sidebar Navigation */}
-      <Sidebar adminData={adminData} />
+      <Sidebar
+        adminData={adminData}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       {/* Main Content Area where tabs render */}
       <main className="admin-content">

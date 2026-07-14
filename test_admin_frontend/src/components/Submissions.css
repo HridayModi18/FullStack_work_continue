@@ -389,3 +389,42 @@
   color: #334155;
   margin-bottom: 0.5rem;
 }
+
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 768px) {
+  .submissions-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .submissions-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .submissions-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .submissions-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Modal responsiveness for grading */
+  .grade-modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .grade-input-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grade-input-field {
+    width: 100%;
+  }
+}
