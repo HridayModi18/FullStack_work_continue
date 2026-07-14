@@ -28,8 +28,8 @@
   display: none;
 }
 
-/* ─── MOBILE ─────────────────────────────────────────── */
-@media (max-width: 768px) {
+/* ─── MOBILE/TABLET LAYOUT ───────────────────────────── */
+@media (max-width: 1024px) {
   .admin-layout {
     flex-direction: column;
     overflow: auto;

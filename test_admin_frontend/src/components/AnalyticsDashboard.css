@@ -214,9 +214,9 @@
 }
 
 /* ─── MOBILE RESPONSIVENESS ─── */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .analytics-container {
-    padding: 1.5rem 1rem;
+    padding: 1rem;
   }
 
   .analytics-header {
@@ -224,7 +224,7 @@
   }
 
   .analytics-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .analytics-header p {
@@ -232,7 +232,7 @@
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
@@ -247,6 +247,20 @@
   }
 
   .chart-wrapper {
-    min-height: 200px;
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
   }
 }
