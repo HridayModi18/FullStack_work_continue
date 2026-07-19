@@ -5,6 +5,7 @@ const {
   Notification,
   AuditLog,
 } = require("../models");
+const { uploadToCloudinary } = require("../config/cloudinary");
 
 //handle the srtudent assignment submission
 exports.submitAssignment = async (req, res) => {
@@ -19,7 +20,9 @@ exports.submitAssignment = async (req, res) => {
       });
     }
 
-    const fileUrl = `/studentuploads/${req.file.filename}`;
+    // Upload student PDF to Cloudinary
+    const uploadResult = await uploadToCloudinary(req.file.buffer, "student_submissions", "auto");
+    const fileUrl = uploadResult.secure_url;
 
     //post must exist and be an assignment type
     const post = await BootcampPost.findByPk(postId);

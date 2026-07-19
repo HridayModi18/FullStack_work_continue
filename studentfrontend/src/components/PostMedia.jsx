@@ -19,7 +19,12 @@ const PostMedia = ({ type, url }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fullUrl = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${url}`;
+  // If url is already an absolute Cloudinary/external URL, use it directly.
+  // Otherwise prepend the backend base URL for legacy local paths.
+  const fullUrl = url && url.startsWith("http")
+    ? url
+    : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${url}`;
+
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);

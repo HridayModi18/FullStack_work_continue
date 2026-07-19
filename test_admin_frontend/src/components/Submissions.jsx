@@ -196,7 +196,7 @@ const Submissions = () => {
 
                 <div className="action-buttons">
                   <a
-                    href={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}${submission.fileUrl}`}
+                    href={submission.fileUrl && submission.fileUrl.startsWith("http") ? submission.fileUrl : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${submission.fileUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-view"

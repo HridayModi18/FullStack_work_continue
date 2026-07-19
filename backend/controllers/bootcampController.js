@@ -1,4 +1,6 @@
 const { BootcampPost, User, AuditLog, PostUpvote, PostComment, PollVote, SavedPost, CommentUpvote, AssignmentSubmission } = require("../models");
+const { uploadToCloudinary } = require("../config/cloudinary");
+
 
 exports.getAllPosts = async (req, res) => {
   try {
@@ -134,12 +136,6 @@ exports.uploadMedia = async (req, res) => {
     const { title, type, tags, content, deadline, assignmentId, rollOutDate } =
       req.body;
 
-    // the url jo hamara student frontend will look for
-    // If there's only one file, it can still be an array to support multi-images consistently
-    const mediaUrls = filesToProcess.map(
-      (file) => `/uploads/${type}s/${file.filename}`,
-    );
-
     let parsedTags = [];
     if (tags) {
       try {
@@ -163,13 +159,25 @@ exports.uploadMedia = async (req, res) => {
       }
     }
 
+    // Determine Cloudinary resource type
+    const resourceType = type === "video" ? "video" : "auto";
+
+    // Upload all files to Cloudinary in parallel
+    const uploadPromises = filesToProcess.map(file =>
+      uploadToCloudinary(file.buffer, `bootcamp_${type}s`, resourceType)
+    );
+    const uploadResults = await Promise.all(uploadPromises);
+
+    // Extract the secure URLs returned by Cloudinary
+    const mediaUrls = uploadResults.map(result => result.secure_url);
+
     const newPost = await BootcampPost.create({
       type,
       title,
       content: content || null,
       mediaUrl: mediaUrls,
       tags: parsedTags,
-      createdBy: req.user.id, // abhi ke liye demo
+      createdBy: req.user.id,
       deadline: deadline || null,
       assignmentId: assignmentId ? parseInt(assignmentId, 10) : null,
       rollOutDate: rollOutDate || null,
@@ -177,7 +185,7 @@ exports.uploadMedia = async (req, res) => {
 
     await AuditLog.create({
       action: "CREATE",
-      details: `Uploaded a new ${newPost.type} titled "${newPost.title}" with ${mediaUrls.length} file(s)`,
+      details: `Uploaded a new ${newPost.type} titled "${newPost.title}" to Cloudinary with ${mediaUrls.length} file(s)`,
       adminId: req.user.id,
     });
 
@@ -185,7 +193,7 @@ exports.uploadMedia = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error uploading media", error: error.message });
+      .json({ message: "Error uploading media to Cloudinary", error: error.message });
   }
 };
 
