@@ -62,9 +62,12 @@ const Profile = () => {
     const willEdit = !isEditing;
     setIsEditing(willEdit);
 
+    const isMobile = window.innerWidth <= 900;
+
     if (willEdit) {
       gsap.to(avatarSectionRef.current, {
-        x: -150,
+        x: isMobile ? 0 : -150,
+        y: isMobile ? -80 : 0,
         scale: 0.9,
         duration: 0.6,
         ease: "power3.out",
@@ -73,9 +76,10 @@ const Profile = () => {
       gsap.to(statsRefs.current, { opacity: 0, duration: 0.3 });
       gsap.fromTo(
         formSectionRef.current,
-        { x: 100, opacity: 0, display: "none" },
+        { x: isMobile ? 0 : 100, y: isMobile ? 50 : 0, opacity: 0, display: "none" },
         {
           x: 0,
+          y: 0,
           opacity: 1,
           display: "block",
           duration: 0.6,
@@ -85,7 +89,8 @@ const Profile = () => {
       );
     } else {
       gsap.to(formSectionRef.current, {
-        x: 50,
+        x: isMobile ? 0 : 50,
+        y: isMobile ? 30 : 0,
         opacity: 0,
         duration: 0.4,
         onComplete: () => {
@@ -94,6 +99,7 @@ const Profile = () => {
       });
       gsap.to(avatarSectionRef.current, {
         x: 0,
+        y: 0,
         scale: 1,
         duration: 0.6,
         ease: "power3.out",
@@ -137,8 +143,11 @@ const Profile = () => {
       setProfile(res.data.admin);
       setIsEditing(false);
 
+      const isMobile = window.innerWidth <= 900;
+
       gsap.to(formSectionRef.current, {
-        x: 50,
+        x: isMobile ? 0 : 50,
+        y: isMobile ? 30 : 0,
         opacity: 0,
         duration: 0.4,
         onComplete: () => {
@@ -147,6 +156,7 @@ const Profile = () => {
       });
       gsap.to(avatarSectionRef.current, {
         x: 0,
+        y: 0,
         scale: 1,
         duration: 0.6,
         ease: "power3.out",
