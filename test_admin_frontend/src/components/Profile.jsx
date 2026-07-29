@@ -252,23 +252,25 @@ const Profile = () => {
             {profile.bio || "No bio added yet. Click Edit Profile to add one!"}
           </p>
 
-          <div
-            className="floating-stat top-left"
-            ref={(el) => (statsRefs.current[0] = el)}
-          >
-            <Shield size={16} /> Admin
-          </div>
-          <div
-            className="floating-stat top-right"
-            ref={(el) => (statsRefs.current[1] = el)}
-          >
-            <Edit2 size={16} /> {profile.postsCreated} Posts
-          </div>
-          <div
-            className="floating-stat top-center"
-            ref={(el) => (statsRefs.current[2] = el)}
-          >
-            <MessageSquare size={16} /> {profile.doubtsAnswered} Doubts Solved
+          <div className="profile-stats-row">
+            <div
+              className="floating-stat top-left"
+              ref={(el) => (statsRefs.current[0] = el)}
+            >
+              <Shield size={16} /> Admin
+            </div>
+            <div
+              className="floating-stat top-center"
+              ref={(el) => (statsRefs.current[1] = el)}
+            >
+              <MessageSquare size={16} /> {profile.doubtsAnswered} Doubts Solved
+            </div>
+            <div
+              className="floating-stat top-right"
+              ref={(el) => (statsRefs.current[2] = el)}
+            >
+              <Edit2 size={16} /> {profile.postsCreated} Posts
+            </div>
           </div>
         </div>
 
