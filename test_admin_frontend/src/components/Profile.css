@@ -350,3 +350,24 @@
     font-size: 1.05rem;
   }
 }
+
+/* ─── MOBILE MEDIA QUERIES ─── */
+@media (max-width: 900px) {
+  .profile-wrapper {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.2rem 2.5rem 1.2rem;
+    box-sizing: border-box;
+  }
+
+  .profile-container {
+    gap: 1.2rem;
+  }
+  
+  .profile-form-section {
+    margin-top: 1rem;
+  }
+}
+

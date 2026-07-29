@@ -67,7 +67,7 @@ const Profile = () => {
     if (willEdit) {
       gsap.to(avatarSectionRef.current, {
         x: isMobile ? 0 : -150,
-        y: isMobile ? -80 : 0,
+        y: isMobile ? -40 : 0,
         scale: 0.9,
         duration: 0.6,
         ease: "power3.out",
@@ -76,7 +76,7 @@ const Profile = () => {
       gsap.to(statsRefs.current, { opacity: 0, duration: 0.3 });
       gsap.fromTo(
         formSectionRef.current,
-        { x: isMobile ? 0 : 100, y: isMobile ? 50 : 0, opacity: 0, display: "none" },
+        { x: isMobile ? 0 : 100, y: isMobile ? 30 : 0, opacity: 0, display: "none" },
         {
           x: 0,
           y: 0,
@@ -90,7 +90,7 @@ const Profile = () => {
     } else {
       gsap.to(formSectionRef.current, {
         x: isMobile ? 0 : 50,
-        y: isMobile ? 30 : 0,
+        y: isMobile ? 20 : 0,
         opacity: 0,
         duration: 0.4,
         onComplete: () => {
@@ -147,7 +147,7 @@ const Profile = () => {
 
       gsap.to(formSectionRef.current, {
         x: isMobile ? 0 : 50,
-        y: isMobile ? 30 : 0,
+        y: isMobile ? 20 : 0,
         opacity: 0,
         duration: 0.4,
         onComplete: () => {
