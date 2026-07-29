@@ -229,6 +229,7 @@ exports.getUserStats = async (req, res) => {
 
 exports.getStudents = async (req, res) => {
   try {
+    const { AssignmentSubmission, Doubt } = require("../models");
     const students = await User.findAll({
       where: { role: "user" },
       attributes: [
@@ -240,9 +241,26 @@ exports.getStudents = async (req, res) => {
         "year",
         "lastLogin",
       ],
+      include: [
+        { model: AssignmentSubmission, attributes: ["id"] },
+        { model: Doubt, as: "AskedDoubts", attributes: ["question", "answer", "status"] }
+      ],
       order: [["createdAt", "DESC"]],
     });
-    res.json(students);
+
+    const formattedStudents = students.map((student) => ({
+      id: student.id,
+      name: student.name,
+      email: student.email,
+      avatar: student.avatar,
+      rollNumber: student.rollNumber,
+      year: student.year,
+      lastLogin: student.lastLogin,
+      assignmentsCount: student.AssignmentSubmissions ? student.AssignmentSubmissions.length : 0,
+      doubts: student.AskedDoubts ? student.AskedDoubts.map(d => ({ q: d.question, a: d.answer, status: d.status })) : []
+    }));
+
+    res.json(formattedStudents);
   } catch (error) {
     res
       .status(500)

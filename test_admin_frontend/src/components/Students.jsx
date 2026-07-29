@@ -305,9 +305,9 @@ const Students = () => {
     avatar: rs.avatar,
     rollNo: rs.rollNumber || "N/A",
     year: rs.year || "N/A",
-    assignments: 0,
+    assignments: rs.assignmentsCount || 0,
     lastActive: rs.lastLogin ? new Date(rs.lastLogin).toLocaleDateString() : "Never",
-    doubts: []
+    doubts: rs.doubts || []
   }));
 
   return (
