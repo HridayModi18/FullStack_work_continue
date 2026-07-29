@@ -457,7 +457,7 @@
   }
 
   .action-btn {
-    width: 100%;
+    flex: 1;
     justify-content: center;
   }
 }
