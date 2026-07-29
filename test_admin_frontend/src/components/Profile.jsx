@@ -62,86 +62,43 @@ const Profile = () => {
     const willEdit = !isEditing;
     setIsEditing(willEdit);
 
-    const isMobile = window.innerWidth <= 900;
-
     if (willEdit) {
-      if (isMobile) {
-        // On mobile: only scale down avatar slightly, no x/y translation (preserves document flow)
-        gsap.to(avatarSectionRef.current, {
-          scale: 0.85,
-          opacity: 0.6,
-          duration: 0.4,
-          ease: "power3.out",
-        });
-        gsap.to(statsRefs.current, { opacity: 0, duration: 0.3 });
-        gsap.fromTo(
-          formSectionRef.current,
-          { opacity: 0, display: "none", y: 20 },
-          {
-            opacity: 1,
-            display: "block",
-            y: 0,
-            duration: 0.5,
-            delay: 0.15,
-            ease: "power3.out",
-          },
-        );
-      } else {
-        // Desktop: original slide animation
-        gsap.to(avatarSectionRef.current, {
-          x: -150,
-          scale: 0.9,
-          duration: 0.6,
-          ease: "power3.out",
-        });
-        gsap.to(statsRefs.current, { opacity: 0, duration: 0.3 });
-        gsap.fromTo(
-          formSectionRef.current,
-          { x: 100, opacity: 0, display: "none" },
-          {
-            x: 0,
-            opacity: 1,
-            display: "block",
-            duration: 0.6,
-            delay: 0.2,
-            ease: "power3.out",
-          },
-        );
-      }
-    } else {
-      if (isMobile) {
-        gsap.to(formSectionRef.current, {
-          opacity: 0,
-          y: 15,
-          duration: 0.3,
-          onComplete: () => {
-            gsap.set(formSectionRef.current, { display: "none", y: 0 });
-          },
-        });
-        gsap.to(avatarSectionRef.current, {
-          scale: 1,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power3.out",
-          delay: 0.15,
-        });
-      } else {
-        gsap.to(formSectionRef.current, {
-          x: 50,
-          opacity: 0,
-          duration: 0.4,
-          onComplete: () => {
-            gsap.set(formSectionRef.current, { display: "none" });
-          },
-        });
-        gsap.to(avatarSectionRef.current, {
+      gsap.to(avatarSectionRef.current, {
+        x: -150,
+        scale: 0.9,
+        duration: 0.6,
+        ease: "power3.out",
+      });
+
+      gsap.to(statsRefs.current, { opacity: 0, duration: 0.3 });
+      gsap.fromTo(
+        formSectionRef.current,
+        { x: 100, opacity: 0, display: "none" },
+        {
           x: 0,
-          scale: 1,
+          opacity: 1,
+          display: "block",
           duration: 0.6,
-          ease: "power3.out",
           delay: 0.2,
-        });
-      }
+          ease: "power3.out",
+        },
+      );
+    } else {
+      gsap.to(formSectionRef.current, {
+        x: 50,
+        opacity: 0,
+        duration: 0.4,
+        onComplete: () => {
+          gsap.set(formSectionRef.current, { display: "none" });
+        },
+      });
+      gsap.to(avatarSectionRef.current, {
+        x: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: 0.2,
+      });
       gsap.to(statsRefs.current, { opacity: 1, duration: 0.5, delay: 0.4 });
       setFormData({ name: profile.name, bio: profile.bio || "", photo: null });
       setPreview(profile.avatar);
@@ -180,41 +137,21 @@ const Profile = () => {
       setProfile(res.data.admin);
       setIsEditing(false);
 
-      const isMobile = window.innerWidth <= 900;
-
-      if (isMobile) {
-        gsap.to(formSectionRef.current, {
-          opacity: 0,
-          y: 15,
-          duration: 0.3,
-          onComplete: () => {
-            gsap.set(formSectionRef.current, { display: "none", y: 0 });
-          },
-        });
-        gsap.to(avatarSectionRef.current, {
-          scale: 1,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power3.out",
-          delay: 0.15,
-        });
-      } else {
-        gsap.to(formSectionRef.current, {
-          x: 50,
-          opacity: 0,
-          duration: 0.4,
-          onComplete: () => {
-            gsap.set(formSectionRef.current, { display: "none" });
-          },
-        });
-        gsap.to(avatarSectionRef.current, {
-          x: 0,
-          scale: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          delay: 0.2,
-        });
-      }
+      gsap.to(formSectionRef.current, {
+        x: 50,
+        opacity: 0,
+        duration: 0.4,
+        onComplete: () => {
+          gsap.set(formSectionRef.current, { display: "none" });
+        },
+      });
+      gsap.to(avatarSectionRef.current, {
+        x: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: 0.2,
+      });
       gsap.to(statsRefs.current, { opacity: 1, duration: 0.5, delay: 0.4 });
     } catch (err) {
       console.error("Error saving profile", err);
@@ -252,25 +189,23 @@ const Profile = () => {
             {profile.bio || "No bio added yet. Click Edit Profile to add one!"}
           </p>
 
-          <div className="profile-stats-row">
-            <div
-              className="floating-stat top-left"
-              ref={(el) => (statsRefs.current[0] = el)}
-            >
-              <Shield size={16} /> Admin
-            </div>
-            <div
-              className="floating-stat top-center"
-              ref={(el) => (statsRefs.current[1] = el)}
-            >
-              <MessageSquare size={16} /> {profile.doubtsAnswered} Doubts Solved
-            </div>
-            <div
-              className="floating-stat top-right"
-              ref={(el) => (statsRefs.current[2] = el)}
-            >
-              <Edit2 size={16} /> {profile.postsCreated} Posts
-            </div>
+          <div
+            className="floating-stat top-left"
+            ref={(el) => (statsRefs.current[0] = el)}
+          >
+            <Shield size={16} /> Admin
+          </div>
+          <div
+            className="floating-stat top-right"
+            ref={(el) => (statsRefs.current[1] = el)}
+          >
+            <Edit2 size={16} /> {profile.postsCreated} Posts
+          </div>
+          <div
+            className="floating-stat top-center"
+            ref={(el) => (statsRefs.current[2] = el)}
+          >
+            <MessageSquare size={16} /> {profile.doubtsAnswered} Doubts Solved
           </div>
         </div>
 
