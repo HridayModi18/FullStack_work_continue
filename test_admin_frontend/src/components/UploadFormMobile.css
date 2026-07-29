@@ -1,0 +1,171 @@
+/* ============================================================
+   MOBILE CREATE POST — only visible on ≤ 1024px
+   Laptop layout (UploadForm.css) is completely untouched.
+   ============================================================ */
+
+.mobile-upload-container {
+  display: none; /* hidden on laptop */
+}
+
+@media (max-width: 1024px) {
+  .mobile-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1.2rem 4rem 1.2rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  /* ── Page header ── */
+  .mobile-upload-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .mobile-upload-header h1 {
+    font-family: "Outfit", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.4rem 0;
+    background: linear-gradient(90deg, #ffffff, #a1a1aa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-upload-header p {
+    font-size: 0.9rem;
+    color: #71717a;
+    margin: 0;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Grid of 5 option cards ── */
+  .mobile-upload-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* The 5th card spans full width to sit centred at the bottom */
+  .mobile-upload-grid .mobile-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── Individual card ── */
+  .mobile-card {
+    background: linear-gradient(
+      145deg,
+      rgba(30, 30, 38, 0.7),
+      rgba(15, 15, 22, 0.95)
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 1.6rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mobile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--mobile-card-color, #3b82f6);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-card:active {
+    transform: scale(0.96);
+  }
+
+  .mobile-card:hover {
+    border-color: var(--mobile-card-color, #3b82f6);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.7),
+      0 0 20px var(--mobile-card-glow, rgba(59, 130, 246, 0.2));
+    transform: translateY(-3px);
+  }
+
+  .mobile-card:hover::before {
+    opacity: 1;
+  }
+
+  /* icon circle */
+  .mobile-card-icon {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-card:hover .mobile-card-icon {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-card h3 {
+    margin: 0;
+    font-family: "Outfit", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  .mobile-card p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #71717a;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ── Per-card accent colours ── */
+  .mobile-card-text {
+    --mobile-card-color: #3b82f6;
+    --mobile-card-glow: rgba(59, 130, 246, 0.2);
+  }
+  .mobile-card-poll {
+    --mobile-card-color: #10b981;
+    --mobile-card-glow: rgba(16, 185, 129, 0.2);
+  }
+  .mobile-card-image {
+    --mobile-card-color: #ec4899;
+    --mobile-card-glow: rgba(236, 72, 153, 0.2);
+  }
+  .mobile-card-video {
+    --mobile-card-color: #f59e0b;
+    --mobile-card-glow: rgba(245, 158, 11, 0.2);
+  }
+  .mobile-card-assignment {
+    --mobile-card-color: #8b5cf6;
+    --mobile-card-glow: rgba(139, 92, 246, 0.2);
+  }
+}

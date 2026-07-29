@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import CreatePostModal from "./CreatePostModal";
 import "./UploadForm.css";
+import "./UploadFormMobile.css";
 
 const UploadForm = () => {
   const containerRef = useRef(null);
@@ -85,76 +86,109 @@ const UploadForm = () => {
     {
       title: "Text Post",
       icon: <Type size={42} color="#3b82f6" />,
+      mobileIcon: <Type size={28} color="#3b82f6" />,
       class: "card-text",
+      mobileClass: "mobile-card-text",
       desc: "Create a text announcement",
     },
     {
       title: "Poll",
       icon: <BarChart2 size={42} color="#10b981" />,
+      mobileIcon: <BarChart2 size={28} color="#10b981" />,
       class: "card-poll",
+      mobileClass: "mobile-card-poll",
       desc: "Create a voting poll",
     },
     {
       title: "Image",
       icon: <ImageIcon size={42} color="#ec4899" />,
+      mobileIcon: <ImageIcon size={28} color="#ec4899" />,
       class: "card-image",
+      mobileClass: "mobile-card-image",
       desc: "Upload an image",
     },
     {
       title: "Video",
       icon: <Video size={42} color="#f59e0b" />,
+      mobileIcon: <Video size={28} color="#f59e0b" />,
       class: "card-video",
+      mobileClass: "mobile-card-video",
       desc: "Upload a video",
     },
     {
       title: "Assignment",
       icon: <BookOpen size={42} color="#8b5cf6" />,
+      mobileIcon: <BookOpen size={28} color="#8b5cf6" />,
       class: "card-assignment",
+      mobileClass: "mobile-card-assignment",
       desc: "Upload a PDF assignment",
     },
   ];
 
   return (
-    <div className="upload-container" ref={containerRef}>
-      {/* Floating 3D Cards (Rendered first so they sit behind by default) */}
-      {uploadOptions.map((opt, i) => (
-        <div
-          key={opt.title}
-          className={`upload-card ${opt.class}`}
-          ref={(el) => (cardsRef.current[i] = el)}
-          onClick={() => setActiveFormType(opt.title)}
-        >
-          {opt.icon}
-          <h3>{opt.title}</h3>
-          <p
-            style={{
-              fontSize: "0.85rem",
-              color: "#a1a1aa",
-              textAlign: "center",
-              margin: 0,
-            }}
+    <>
+      {/* ─── LAPTOP LAYOUT — GSAP 3D animation (unchanged) ─── */}
+      <div className="upload-container" ref={containerRef}>
+        {uploadOptions.map((opt, i) => (
+          <div
+            key={opt.title}
+            className={`upload-card ${opt.class}`}
+            ref={(el) => (cardsRef.current[i] = el)}
+            onClick={() => setActiveFormType(opt.title)}
           >
-            {opt.desc}
+            {opt.icon}
+            <h3>{opt.title}</h3>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "#a1a1aa",
+                textAlign: "center",
+                margin: 0,
+              }}
+            >
+              {opt.desc}
+            </p>
+          </div>
+        ))}
+
+        <div
+          className={`upload-trigger-box ${isOpen ? "open" : ""}`}
+          onClick={toggleCards}
+          ref={triggerRef}
+        >
+          <div className="trigger-icon-wrapper">
+            {isOpen ? (
+              <X size={48} color="#ef4444" />
+            ) : (
+              <Plus size={48} color="#fff" />
+            )}
+          </div>
+          <h2>{isOpen ? "Close Menu" : "Create New"}</h2>
+          <p className="trigger-subtitle">
+            {isOpen ? "Click anywhere to collapse" : "Select an upload type"}
           </p>
         </div>
-      ))}
+      </div>
 
-      <div
-        className={`upload-trigger-box ${isOpen ? "open" : ""}`}
-        onClick={toggleCards}
-        ref={triggerRef}
-      >
-        <div className="trigger-icon-wrapper">
-          {isOpen ? (
-            <X size={48} color="#ef4444" />
-          ) : (
-            <Plus size={48} color="#fff" />
-          )}
+      {/* ─── MOBILE LAYOUT — Simple card grid (shown only on ≤1024px via CSS) ─── */}
+      <div className="mobile-upload-container">
+        <div className="mobile-upload-header">
+          <h1>Create Post</h1>
+          <p>Select a post type below</p>
         </div>
-        <h2>{isOpen ? "Close Menu" : "Create New"}</h2>
-        <p className="trigger-subtitle">
-          {isOpen ? "Click anywhere to collapse" : "Select an upload type"}
-        </p>
+        <div className="mobile-upload-grid">
+          {uploadOptions.map((opt) => (
+            <div
+              key={opt.title}
+              className={`mobile-card ${opt.mobileClass}`}
+              onClick={() => setActiveFormType(opt.title)}
+            >
+              <div className="mobile-card-icon">{opt.mobileIcon}</div>
+              <h3>{opt.title}</h3>
+              <p>{opt.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {activeFormType && (
@@ -163,8 +197,9 @@ const UploadForm = () => {
           onClose={() => setActiveFormType(null)}
         />
       )}
-    </div>
+    </>
   );
 };
 
 export default UploadForm;
+

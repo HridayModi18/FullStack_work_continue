@@ -218,3 +218,10 @@
   --card-color: #8b5cf6;
   --card-color-glow: rgba(139, 92, 246, 0.2);
 }
+
+/* ── Hide laptop GSAP layout on mobile (mobile layout takes over via UploadFormMobile.css) ── */
+@media (max-width: 1024px) {
+  .upload-container {
+    display: none;
+  }
+}
