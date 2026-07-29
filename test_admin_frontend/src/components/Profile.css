@@ -263,7 +263,8 @@
   }
 
   .profile-avatar-section {
-    width: auto;
+    width: 480px;
+    min-width: 480px;
   }
 
   .avatar-wrapper {
@@ -292,16 +293,19 @@
     padding: 1.2rem 1.8rem;
   }
 
+  /* top-left: hovers to the top-left of the avatar section */
   .floating-stat.top-left {
     top: 5%;
-    left: -120px;
+    left: 0;
   }
 
+  /* top-right: hovers to the top-right of the avatar section */
   .floating-stat.top-right {
-    top: 25%;
-    right: -140px;
+    top: 5%;
+    right: 0;
   }
 
+  /* top-center: floats above the avatar section, horizontally centred */
   .floating-stat.top-center {
     top: -30px;
     left: 50%;
