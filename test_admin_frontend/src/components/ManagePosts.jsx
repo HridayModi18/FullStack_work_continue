@@ -193,7 +193,7 @@ const ManagePosts = () => {
           </div>
         ) : (
           <a
-            href={mediaUrls[0] ? `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${mediaUrls[0]}` : "#"}
+            href={mediaUrls[0] ? (mediaUrls[0].startsWith("http") ? mediaUrls[0] : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${mediaUrls[0]}`) : "#"}
             target="_blank"
             rel="noreferrer"
             className="media-preview-box"
