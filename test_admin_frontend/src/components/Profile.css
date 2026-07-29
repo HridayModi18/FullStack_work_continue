@@ -253,13 +253,15 @@
 @media (min-width: 901px) {
   .profile-wrapper {
     min-height: calc(100vh - 80px);
-    padding: 2rem;
+    padding: 3.5rem 2rem 2rem 2rem; /* extra top padding so top-center stat is never clipped */
     justify-content: center;
+    overflow: visible; /* allow floating stats to extend outside wrapper without being clipped */
   }
 
   .profile-container {
     flex-direction: row;
     gap: 0;
+    overflow: visible;
   }
 
   .profile-avatar-section {
