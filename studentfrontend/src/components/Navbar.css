@@ -364,12 +364,13 @@
 /* ── Mobile: center notifications dropdown so it never overflows screen ── */
 @media (max-width: 768px) {
   .notifications-dropdown {
-    position: fixed;
-    top: 70px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    width: calc(100vw - 32px);
-    max-width: 360px;
+    position: fixed !important;
+    top: 75px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100vw - 24px) !important;
+    max-width: 340px !important;
+    box-sizing: border-box !important;
   }
 }

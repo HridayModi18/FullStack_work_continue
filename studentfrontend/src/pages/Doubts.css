@@ -741,4 +741,8 @@
     flex-shrink: 0;
     gap: 0.5rem;
   }
+
+  .doubt-header-right .status-badge {
+    display: none !important;
+  }
 }
