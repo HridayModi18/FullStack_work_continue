@@ -1,6 +1,7 @@
 const { User, BootcampPost, Doubt } = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
+const { uploadToCloudinary } = require("../config/cloudinary");
 
 exports.getActiveAdmins = async (req, res) => {
   try {
@@ -143,7 +144,12 @@ exports.updateProfile = async (req, res) => {
     if (bio !== undefined) admin.bio = bio; // Allow empty
 
     if (req.file) {
-      admin.avatar = `http://localhost:5000/uploads/photos/${req.file.filename}`;
+      const result = await uploadToCloudinary(
+        req.file.buffer,
+        "profile_pictures",
+        "image"
+      );
+      admin.avatar = result.secure_url;
     }
 
     await admin.save();
