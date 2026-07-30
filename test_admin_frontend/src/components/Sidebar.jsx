@@ -48,9 +48,13 @@ const Sidebar = ({ adminData, isOpen, onClose }) => {
       <div className="sidebar-footer">
         <div className="admin-info">
           <img 
-            src={(adminData?.avatar && adminData.avatar !== "null") ? adminData.avatar : `https://ui-avatars.com/api/?name=${adminData?.name || 'Admin'}`} 
+            src={(adminData?.avatar && adminData.avatar !== "null" && !adminData.avatar.includes("localhost:5000")) ? adminData.avatar : `https://ui-avatars.com/api/?name=${encodeURIComponent(adminData?.name || 'Admin')}&background=random`} 
             alt="Admin" 
             className="admin-avatar"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(adminData?.name || 'Admin')}&background=random`;
+            }}
           />
           <div className="admin-details">
             <span className="admin-name">{(adminData?.name || 'Admin').split(' ')[0]}</span>

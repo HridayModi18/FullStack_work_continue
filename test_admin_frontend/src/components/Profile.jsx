@@ -176,9 +176,13 @@ const Profile = () => {
         <div className="profile-avatar-section" ref={avatarSectionRef}>
           <div className="avatar-wrapper">
             <img
-              src={preview || silhouetteImg}
+              src={(preview && !preview.includes("localhost:5000")) ? preview : `https://ui-avatars.com/api/?name=${encodeURIComponent(profile?.name || "Admin")}&background=random`}
               alt="Avatar"
               className="profile-avatar-img"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(profile?.name || "Admin")}&background=random`;
+              }}
             />
             {isEditing && (
               <label className="photo-upload-overlay">

@@ -113,11 +113,16 @@ exports.getProfile = async (req, res) => {
 
     if (!admin) return res.status(404).json({ message: "Profile not found" });
 
+    let avatarUrl = admin.avatar;
+    if (avatarUrl && avatarUrl.includes("localhost:5000")) {
+      avatarUrl = null;
+    }
+
     res.json({
       id: admin.id,
       name: admin.name,
       email: admin.email,
-      avatar: admin.avatar,
+      avatar: avatarUrl,
       rollNumber: admin.rollNumber,
       year: admin.year,
       bio: admin.bio,

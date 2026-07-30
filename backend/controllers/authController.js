@@ -51,9 +51,14 @@ exports.getMe = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const userObj = user.toJSON();
+    if (userObj.avatar && userObj.avatar.includes("localhost:5000")) {
+      userObj.avatar = null;
+    }
+
     res.json({
       message: "You are authenticated",
-      user: user,
+      user: userObj,
     });
   } catch (error) {
     res.status(500).json({ message: "Error fetching user data" });
