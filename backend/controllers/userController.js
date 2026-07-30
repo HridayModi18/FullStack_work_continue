@@ -1,7 +1,7 @@
 const { User, BootcampPost, Doubt } = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
-const { uploadToCloudinary } = require("../config/cloudinary");
+const { uploadToCloudinary, deleteFromCloudinary } = require("../config/cloudinary");
 
 exports.getActiveAdmins = async (req, res) => {
   try {
@@ -149,6 +149,11 @@ exports.updateProfile = async (req, res) => {
     if (bio !== undefined) admin.bio = bio; // Allow empty
 
     if (req.file) {
+      // If user already has a Cloudinary profile picture, delete it first
+      if (admin.avatar && admin.avatar.includes("res.cloudinary.com") && admin.avatar.includes("profile_pictures")) {
+        await deleteFromCloudinary(admin.avatar, "image");
+      }
+
       const result = await uploadToCloudinary(
         req.file.buffer,
         "profile_pictures",
