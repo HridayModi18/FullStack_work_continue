@@ -134,8 +134,16 @@ const Profile = () => {
         },
       );
 
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+
       setProfile(res.data.admin);
+      if (res.data.admin?.avatar) {
+        setPreview(res.data.admin.avatar);
+      }
       setIsEditing(false);
+      setTimeout(() => window.location.reload(), 500);
 
       gsap.to(formSectionRef.current, {
         x: 50,
