@@ -137,13 +137,12 @@
 }
 
 .post-card.instagram-style {
-  background: var(--surface-color);
+  background: var(--bg-color);
   border: 1px solid var(--surface-border);
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   margin-bottom: 1.25rem;
-  box-shadow: var(--card-shadow);
   width: 100%;
   box-sizing: border-box;
 }
