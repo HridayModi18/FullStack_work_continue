@@ -707,34 +707,41 @@
 /* ── Mobile Fixes ── */
 @media (max-width: 768px) {
   .doubt-header {
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .student-info {
     flex: 1;
     min-width: 0;
-    max-width: calc(100% - 120px);
+    max-width: 100%;
   }
 
   .student-meta {
     min-width: 0;
-    overflow: hidden;
+    width: 100%;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
   }
 
   .student-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
     max-width: 100%;
   }
 
   .doubt-time {
-    font-size: 0.7rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
+    font-size: 0.75rem;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: 100%;
   }
 
   .doubt-header-right {
