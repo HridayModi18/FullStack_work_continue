@@ -130,13 +130,32 @@ button {
   background: #475569;
 }
 
-/* ── Mobile Performance Optimization ── */
-/* Strip heavy GPU backdrop-filter blurs on mobile (< 768px) for butter-smooth scrolling while keeping laptop 100% untouched */
+/* ── Mobile Performance Optimization (< 768px) ── */
+/* Laptop / Desktop remains 100% untouched with rich glassmorphism and full Framer Motion springs */
 @media (max-width: 768px) {
+  /* 1. Disable heavy GPU real-time backdrop blurs on mobile */
   *,
   *::before,
   *::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+
+  /* 2. Hardware acceleration for fixed bars, widgets, and scrollable feeds */
+  .navbar-wrapper,
+  .mobile-menu,
+  .notifications-dropdown,
+  .submission-widget-container,
+  .doubt-widget-container,
+  .feed-container,
+  .post-card {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* 3. Reduce layout repaint overhead on mobile scroll */
+  body {
+    -webkit-overflow-scrolling: touch;
   }
 }
