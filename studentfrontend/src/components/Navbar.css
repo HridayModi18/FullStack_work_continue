@@ -360,3 +360,16 @@
 .dropdown-item.logout-btn:hover {
   background: rgba(239, 68, 68, 0.1);
 }
+
+/* ── Mobile: center notifications dropdown so it never overflows screen ── */
+@media (max-width: 768px) {
+  .notifications-dropdown {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100vw - 32px);
+    max-width: 360px;
+  }
+}
