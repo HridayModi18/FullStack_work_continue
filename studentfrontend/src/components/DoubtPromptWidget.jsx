@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import labubuImg from "../assets/labubu.png";
 import "./DoubtPromptWidget.css";
 import { HelpCircle } from "lucide-react";
 
@@ -25,8 +24,6 @@ const DoubtPromptWidget = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1, type: "spring", stiffness: 100, damping: 15 }}
       >
-        <img src={labubuImg} alt="Labubu Mascot" className="labubu-mascot" />
-
         <div className="doubt-prompt-box">
           <p className="doubt-prompt-text">
             Have doubts? Ask our expert admins

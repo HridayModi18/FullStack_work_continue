@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import labubuImg from "../assets/labubu.png";
 import {
   Download,
   ExternalLink,
@@ -64,12 +63,6 @@ const SubmissionPromptWidget = ({
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 100, damping: 15 }}
       >
-        <img
-          src={labubuImg}
-          alt="Labubu Mascot"
-          className="sub-labubu-mascot"
-        />
-
         <div className="submission-prompt-box">
           <h3 className="submission-widget-title">Active Assignments</h3>
           <div className="assignments-scroll-list">
