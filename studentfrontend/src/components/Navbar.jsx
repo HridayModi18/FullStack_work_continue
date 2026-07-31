@@ -28,6 +28,8 @@ const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const notificationRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const mobileMenuBtnRef = useRef(null);
 
   const token = localStorage.getItem("token");
   let user = null;
@@ -95,9 +97,21 @@ const Navbar = () => {
       if (notificationRef.current && !notificationRef.current.contains(event.target)) {
         setShowNotifications(false);
       }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target) &&
+        mobileMenuBtnRef.current &&
+        !mobileMenuBtnRef.current.contains(event.target)
+      ) {
+        setMobileMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -263,6 +277,7 @@ const Navbar = () => {
           </motion.button>
 
           <button
+            ref={mobileMenuBtnRef}
             className="icon-btn mobile-only"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
@@ -274,6 +289,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            ref={mobileMenuRef}
             className="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}

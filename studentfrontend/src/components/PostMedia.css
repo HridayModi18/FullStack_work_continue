@@ -55,18 +55,23 @@
   justify-content: center;
   background: #525659;
   padding: 1rem 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  touch-action: pan-y;
 }
 
 .pdf-page {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   max-width: 100%;
+  pointer-events: none;
 }
 
-.pdf-page canvas {
+.pdf-page canvas,
+.react-pdf__Page__canvas {
   max-width: 100% !important;
   height: auto !important;
+  pointer-events: none !important;
+  touch-action: pan-y !important;
+  user-select: none !important;
 }
 
 .pdf-controls {
