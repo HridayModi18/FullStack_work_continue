@@ -131,30 +131,52 @@ button {
 }
 
 /* ── Mobile Performance Optimization (< 768px) ── */
-/* Laptop / Desktop remains 100% untouched with rich glassmorphism and full Framer Motion springs */
+/* Desktop remains 100% untouched with full visual effects */
 @media (max-width: 768px) {
-  /* 1. Disable heavy GPU real-time backdrop blurs on mobile */
+  /* 1. Hide heavy fixed background glowing blobs (filter: blur(80px)) on mobile */
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  /* 2. Disable real-time GPU blurs globally on mobile */
   *,
   *::before,
   *::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    filter: none !important;
   }
 
-  /* 2. Hardware acceleration for fixed bars, widgets, and scrollable feeds */
-  .navbar-wrapper,
+  /* 3. Strip heavy glowing box-shadows and replace with simple borders for mobile GPU efficiency */
+  * {
+    box-shadow: none !important;
+  }
+
+  /* 4. Provide solid opaque background fallbacks for mobile drawers and overlays */
+  .navbar-container,
   .mobile-menu,
   .notifications-dropdown,
-  .submission-widget-container,
-  .doubt-widget-container,
-  .feed-container,
+  .user-profile-dropdown,
+  .doubt-widget-card,
+  .submission-widget-card,
+  .modal-overlay,
   .post-card {
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    background-color: rgba(17, 24, 39, 0.98) !important;
   }
 
-  /* 3. Reduce layout repaint overhead on mobile scroll */
+  [data-theme='light'] .navbar-container,
+  [data-theme='light'] .mobile-menu,
+  [data-theme='light'] .notifications-dropdown,
+  [data-theme='light'] .user-profile-dropdown,
+  [data-theme='light'] .doubt-widget-card,
+  [data-theme='light'] .submission-widget-card,
+  [data-theme='light'] .modal-overlay,
+  [data-theme='light'] .post-card {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+  }
+
+  /* 5. Smooth touch scrolling */
   body {
     -webkit-overflow-scrolling: touch;
   }

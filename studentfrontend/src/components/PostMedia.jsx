@@ -50,7 +50,7 @@ const PostMedia = ({ type, url }) => {
   if (type === "video") {
     return (
       <div className="media-wrapper video-wrapper">
-        <video controls className="instagram-media" preload="metadata">
+        <video controls className="instagram-media" preload="none">
           <source src={fullUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
