@@ -180,4 +180,26 @@ button {
   body {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* 6. Disable heavy background keyframe animations on mobile */
+  .peel-overlay::before,
+  .pulse-orb,
+  .ambient-glow,
+  .glowing-card {
+    animation: none !important;
+  }
+
+  /* 7. Promote fixed header & menus to dedicated GPU hardware layer on mobile */
+  .navbar-wrapper,
+  .navbar-container,
+  .mobile-menu {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* 8. Fast touch interaction without 300ms double-tap delay */
+  html, body, button, a, input, select, textarea, [role="button"] {
+    touch-action: manipulation;
+  }
 }

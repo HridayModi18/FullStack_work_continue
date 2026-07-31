@@ -42,6 +42,7 @@ const PostMedia = ({ type, url }) => {
           alt="Post media"
           className="instagram-media"
           loading="lazy"
+          decoding="async"
         />
       </div>
     );
