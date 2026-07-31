@@ -48,10 +48,10 @@
 }
 
 .capsule.active.pending {
-  background: var(--accent-color);
-  color: var(--text-secondary);
-  border-color: var(--accent-color);
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  background: #eab308;
+  color: white;
+  border-color: #eab308;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.4);
 }
 
 .capsule.active.completed {
