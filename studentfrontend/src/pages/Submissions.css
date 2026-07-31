@@ -41,13 +41,15 @@
   flex-shrink: 0;
 }
 
-.capsule:hover {
-  transform: translateY(-2px);
+.capsule:hover,
+.capsule:active,
+.capsule:focus {
+  transform: none !important;
 }
 
 .capsule.active.pending {
   background: var(--accent-color);
-  color: white;
+  color: var(--text-secondary);
   border-color: var(--accent-color);
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
 }
