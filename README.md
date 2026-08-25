@@ -1,4 +1,4 @@
-# Mentor Bootcamp Admin Dashboard
+# Mentox Bootcamp Admin Dashboard
 
 A full-stack, authenticated web application designed for administrators to manage bootcamp content, media uploads, student data, and doubts. 
 
